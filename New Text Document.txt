@@ -1,0 +1,396 @@
+
+
+mysql> show databases
+    
++--------------------+
+| Database           |
++--------------------+
+| grades             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use grades ;
+Database changed
+
+mysql> create table students (student_id int primary key , student_name varchar(100) not null ,email varchar(50),phone varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+
+
+mysql>  create table courses (course_id int primary key , course_name varchar(100) not null ,credit_hours int);
+Query OK, 0 rows affected (0.05 sec)
+
+
+mysql> create table students_courses (course_id int , student_id varchar(100) not null ,credit_hours int , PRIMARY KEY (student_id, course_id));
+Query OK, 0 rows affected (0.05 sec)
+
+
+
+mysql>  alter table students modify column student_name varchar(150);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+mysql> ALTER TABLE students ADD CONSTRAINT unique (email);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2023-03-27 12:00:52 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT CURRENT_USER;
++----------------+
+| CURRENT_USER   |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT VERSION();
++-----------------+
+| VERSION()       |
++-----------------+
+| 10.4.27-MariaDB |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> current_time ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'current_time' at line 1
+mysql> select current_time();
++----------------+
+| current_time() |
++----------------+
+| 12:09:49       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select current_date();
++----------------+
+| current_date() |
++----------------+
+| 2023-03-27     |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE students ADD gender enum('male' , 'femal');
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+ 
+       ALTER TABLE students ADD birth_date date;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE students DROP COLUMN student_name;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc students;
++------------+----------------------+------+-----+---------+-------+
+| Field      | Type                 | Null | Key | Default | Extra |
++------------+----------------------+------+-----+---------+-------+
+| student_id | int(11)              | NO   | PRI | NULL    |       |
+| email      | varchar(50)          | YES  | UNI | NULL    |       |
+| phone      | varchar(20)          | YES  |     | NULL    |       |
+| gender     | enum('male','femal') | YES  |     | NULL    |       |
+| birth_date | date                 | YES  |     | NULL    |       |
++------------+----------------------+------+-----+---------+-------+
+5 rows in set (0.03 sec)
+
+
+mysql> alter table students add column firstname varchar(200),add column last_name varchar(200) ;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc students;
++------------+----------------------+------+-----+---------+-------+
+| Field      | Type                 | Null | Key | Default | Extra |
++------------+----------------------+------+-----+---------+-------+
+| student_id | int(11)              | NO   | PRI | NULL    |       |
+| email      | varchar(50)          | YES  | UNI | NULL    |       |
+| phone      | varchar(20)          | YES  |     | NULL    |       |
+| gender     | enum('male','femal') | YES  |     | NULL    |       |
+| birth_date | date                 | YES  |     | NULL    |       |
+| firstname  | varchar(200)         | YES  |     | NULL    |       |
+| last_name  | varchar(200)         | YES  |     | NULL    |       |
++------------+----------------------+------+-----+---------+-------+
+7 rows in set (0.03 sec)
+
+
+
+
+
+
+
+
+
+
+
+mysql> insert into students (student_id , firstname , email ) values (1 , 'ehab' ,'ehab@gmail.com');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from students ;
++------------+----------------+-------+--------+------------+-----------+-----------+
+| student_id | email          | phone | gender | birth_date | firstname | last_name |
++------------+----------------+-------+--------+------------+-----------+-----------+
+|          1 | ehab@gmail.com | NULL  | NULL   | NULL       | ehab      | NULL      |
++------------+----------------+-------+--------+------------+-----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> desc students;
++------------+----------------------+------+-----+---------+-------+
+| Field      | Type                 | Null | Key | Default | Extra |
++------------+----------------------+------+-----+---------+-------+
+| student_id | int(11)              | NO   | PRI | NULL    |       |
+| email      | varchar(50)          | YES  | UNI | NULL    |       |
+| phone      | varchar(20)          | YES  |     | NULL    |       |
+| gender     | enum('male','femal') | YES  |     | NULL    |       |
+| birth_date | date                 | YES  |     | NULL    |       |
+| firstname  | varchar(200)         | YES  |     | NULL    |       |
+| last_name  | varchar(200)         | YES  |     | NULL    |       |
++------------+----------------------+------+-----+---------+-------+
+7 rows in set (0.03 sec)
+
+mysql> ^C
+mysql>  insert into students (phone , gender , birth_date,last_name ) values (01068193117 , 'male' ,'11-4-1996',mohammed);
+ 
+mysql>  insert into students (phone , gender , birth_date,last_name ) values (01068193117 , 'male' ,'11-4-1996','mohammed');
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> select* from students
+    -> select* from students;
+
+mysql> select * from students;
++------------+----------------+------------+--------+------------+-----------+-----------+
+| student_id | email          | phone      | gender | birth_date | firstname | last_name |
++------------+----------------+------------+--------+------------+-----------+-----------+
+|          0 | NULL           | 1068193117 | male   | 0000-00-00 | NULL      | mohammed  |
+|          1 | ehab@gmail.com | NULL       | NULL   | NULL       | ehab      | NULL      |
++------------+----------------+------------+--------+------------+-----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> create table male_students as select gender from students;
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from male_students;
++--------+
+| gender |
++--------+
+| male   |
+| NULL   |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> DROP TABLE male_students;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table male_students as select * from students;
+Query OK, 2 rows affected, 1 warning (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 1
+
+mysql> select * from male_students;
++------------+----------------+------------+--------+------------+-----------+-----------+
+| student_id | email          | phone      | gender | birth_date | firstname | last_name |
++------------+----------------+------------+--------+------------+-----------+-----------+
+|          0 | NULL           | 1068193117 | male   | 0000-00-00 | NULL      | mohammed  |
+|          1 | ehab@gmail.com | NULL       | NULL   | NULL       | ehab      | NULL      |
++------------+----------------+------------+--------+------------+-----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> cretae database alex_cms;
+
+mysql> CREATE DATABASE alec_cms;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> source E:\lab1_script.txt
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+ 
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| alec_cms           |
+| grades             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+7 rows in set (0.00 sec)
+
+
+
+
+
+
+===============================================================================================================
+================================================ task 2 =======================================================
+
+mysql> create database alex_cms;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use alex_cms;
+Database changed
+
+mysql> source E:\lab1_script.txt;
+
+Query OK, 0 rows affected (0.05 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| alex_cms           |
+| grades             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> select * from students;
++------------+------------+-----------+------+-------+--------+------------+
+| student_id | first_name | last_name | tel  | email | gender | birth_date |
++------------+------------+-----------+------+-------+--------+------------+
+|          1 | Ahmed      | Aly       | NULL | NULL  | male   | 1991-10-01 |
+|          2 | Ahmed      | Ibrahim   | NULL | NULL  | male   | 1991-09-01 |
+|          3 | Ahmed      | Ossama    | NULL | NULL  | male   | 1992-10-01 |
+|          4 | Hoda       | Khaled    | NULL | NULL  | female | 1991-09-01 |
+|          5 | Mona       | Khalil    | NULL | NULL  | female | 1992-10-01 |
++------------+------------+-----------+------+-------+--------+------------+
+==================================================================================================
+mysql> select * from students where gender = 'male';
++------------+------------+-----------+------+-------+--------+------------+
+| student_id | first_name | last_name | tel  | email | gender | birth_date |
++------------+------------+-----------+------+-------+--------+------------+
+|          1 | Ahmed      | Aly       | NULL | NULL  | male   | 1991-10-01 |
+|          2 | Ahmed      | Ibrahim   | NULL | NULL  | male   | 1991-09-01 |
+|          3 | Ahmed      | Ossama    | NULL | NULL  | male   | 1992-10-01 |
++------------+------------+-----------+------+-------+--------+------------+
+==================================================================================================
+ntax to use near 'FROM table_name' at line 3
+mysql> SELECT COUNT(student_id) FROM students WHERE gender = 'male';
++-------------------+
+| COUNT(student_id) |
++-------------------+
+|                 3 |
++-------------------+
+1 row in set (0.00 sec)
+==============================================================================================
+ SELECT * FROM students WHERE birth_date < '1992-10-01';
++------------+------------+-----------+------+-------+--------+------------+
+| student_id | first_name | last_name | tel  | email | gender | birth_date |
++------------+------------+-----------+------+-------+--------+------------+
+|          1 | Ahmed      | Aly       | NULL | NULL  | male   | 1991-10-01 |
+|          2 | Ahmed      | Ibrahim   | NULL | NULL  | male   | 1991-09-01 |
+|          4 | Hoda       | Khaled    | NULL | NULL  | female | 1991-09-01 |
++------------+------------+-----------+------+-------+--------+------------+
+3 rows in set (0.00 sec)
+==================================================================================================
+ SELECT * FROM students WHERE birth_date > '1991-10-01';
++------------+------------+-----------+------+-------+--------+------------+
+| student_id | first_name | last_name | tel  | email | gender | birth_date |
++------------+------------+-----------+------+-------+--------+------------+
+|          3 | Ahmed      | Ossama    | NULL | NULL  | male   | 1992-10-01 |
+|          5 | Mona       | Khalil    | NULL | NULL  | female | 1992-10-01 |
++------------+------------+-----------+------+-------+--------+------------+
+2 rows in set (0.00 sec)
+====================================================================================================
+ select course_id , grade from students_courses order by grade ;
++-----------+-------+
+| course_id | grade |
++-----------+-------+
+|         4 |    70 |
+|         1 |    80 |
+|         3 |    80 |
+|         2 |    90 |
+|         2 |    99 |
+|         3 |   100 |
++-----------+-------+============================================================================================
+
+
+mysql> select first_name , last_name from students where first_name like 'a%';
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Ahmed      | Aly       |
+| Ahmed      | Ibrahim   |
+| Ahmed      | Ossama    |
++------------+-----------+
+=======================================================================================================
+ select gender, count(gender) from students group by gender;
++--------+---------------+
+| gender | count(gender) |
++--------+---------------+
+| male   |             3 |
+| female |             2 |
++--------+---------------+
