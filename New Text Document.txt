@@ -394,3 +394,17 @@ mysql> select first_name , last_name from students where first_name like 'a%';
 | male   |             3 |
 | female |             2 |
 +--------+---------------+
+=======================================================================================================
+ select first_name , count(*) from students group by first_name having count(*) > 2;
++------------+----------+
+| first_name | count(*) |
++------------+----------+
+| Ahmed      |        3 |
++------------+----------+
+=======================================================================================================
+ select course_name , max(grade) from courses c , students_courses sc where c.course_id = sc.course_id;
++-------------+------------+
+| course_name | max(grade) |
++-------------+------------+
+| Database    |        100 |
++-------------+------------+
